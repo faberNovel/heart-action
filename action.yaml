@@ -1,0 +1,27 @@
+name: Heart
+author: Bastien Gatellier
+description: Analyze URLs using Heart
+inputs:
+  analysisModule:
+    description: Short name of the analysis module (e.g. greenit)
+    required: true
+    default: ''
+  file:
+    description: Path to the JSON configuration file
+    required: false
+    default: ''
+  inline:
+    description: Inlined JSON configuration definition
+    required: false
+    default: ''
+  threshold:
+    description: A threshold between 0 and 100 that you want to reach with the analysis
+    required: false
+    default: ''
+  listenerModules:
+    description: Short names of the listener modules, separated by commas (e.g. slack,bigquery)
+    required: false
+    default: ''
+runs:
+  using: docker
+  image: Dockerfile
