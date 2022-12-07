@@ -1,27 +1,27 @@
 #!/bin/bash
 
-# short name of the analysis module (e.g. greenit)
-analysisModule=$1
+# service name that analyze the URL (e.g. greenit)
+analysisService=$1
 # path to the JSON configuration file
 file=$2
 # inlined JSON configuration definition
 inline=$3
 # a threshold between 0 and 100 that you want to reach with the analysis
 threshold=$4
-# short names of the listener modules, separated by commas (e.g. slack,bigquery)
-listenerModules=$5
+# services names that process the result of the analyze, separated by commas (e.g. slack,bigquery)
+listenerServices=$5
 
 generate_installable_modules() {
-  local modulesShortnames="cli $analysisModule"
+  local servicesNames="cli $analysisService"
   local packageNamePrefix="@fabernovel/heart-"
 
-  # add listener modules
-  if [ -n "$listenerModules" ]; then
-      modulesShortnames+=" ${listenerModules//,/ }"
+  # add listener services
+  if [ -n "$listenerServices" ]; then
+      servicesNames+=" ${listenerServices//,/ }"
   fi
 
-  # add @fabernovel/heart- prefix to these values
-  echo $packageNamePrefix${modulesShortnames// / $packageNamePrefix}
+  # build the package names from the services names (add the @fabernovel/heart- prefix)
+  echo $packageNamePrefix${servicesNames// / $packageNamePrefix}
 }
 
 generate_heart_command() {
@@ -31,12 +31,9 @@ generate_heart_command() {
   if [ -n "$inline" ]; then cliOptions+=" --inline $inline"; fi
   if [ -n "$threshold" ]; then cliOptions+=" --threshold $threshold"; fi
 
-  echo $analysisModule$cliOptions
+  echo $analysisService$cliOptions
 }
 
-echo "Install modules"
 npm init --yes
 npm install $(generate_installable_modules)
-
-echo "Running"
 npx heart $(generate_heart_command)

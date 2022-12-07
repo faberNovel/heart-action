@@ -2,8 +2,8 @@ name: Heart
 author: Bastien Gatellier
 description: Analyze URLs using Heart
 inputs:
-  analysisModule:
-    description: Short name of the analysis module (e.g. greenit)
+  analysisService:
+    description: Service name that analyze the URL (e.g. greenit)
     required: true
     default: ''
   file:
@@ -18,10 +18,16 @@ inputs:
     description: A threshold between 0 and 100 that you want to reach with the analysis
     required: false
     default: ''
-  listenerModules:
-    description: Short names of the listener modules, separated by commas (e.g. slack,bigquery)
+  listenerServices:
+    description: Services names that process the result of the analyze, separated by commas (e.g. slack,bigquery)
     required: false
     default: ''
 runs:
   using: docker
   image: Dockerfile
+  args:
+    - ${{ inputs.analysisService }}
+    - ${{ github.GITHUB_WORKSPACE }}${{ inputs.file }}
+    - ${{ inputs.inline }}
+    - ${{ inputs.threshold }}
+    - ${{ inputs.listenerServices }}
