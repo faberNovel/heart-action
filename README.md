@@ -1,10 +1,10 @@
-# Heart: evaluate URLs (GreenIT, performances, security)
+# Heart: evaluate web pages (GreenIT, performances, security)
 
-This GitHub action make it easier to use [Heart](https://heart.fabernovel.com) in your CI workflow to analyze URLs.
+This GitHub action make it easier the use of [Heart](https://heart.fabernovel.com) in your CI workflow.
 
 ## Usage
 
-```
+```yaml
 - uses: faberNovel/heart-action@3
   with:
     # [Required]
@@ -32,7 +32,7 @@ This GitHub action make it easier to use [Heart](https://heart.fabernovel.com) i
 
 ### Single analysis service, single URL
 
-```
+```yaml
 jobs:
     steps:
       - uses: faberNovel/heart-action@3
@@ -45,7 +45,7 @@ jobs:
 
 ### Single analysis service, multiple URLs
 
-```
+```yaml
 jobs:
   lighthouse_configuration_matrix:
     strategy:
