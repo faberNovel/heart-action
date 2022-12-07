@@ -11,6 +11,9 @@ RUN npm install
 ENV CHROME_PATH=/usr/bin/google-chrome-stable
 
 COPY entrypoint.sh /entrypoint.sh
+COPY package.json /package.json
+COPY package-lock.json /package-lock.json
+
 ENTRYPOINT ["/entrypoint.sh"]
 
 # set bash as the default shell
