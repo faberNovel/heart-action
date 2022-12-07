@@ -3,23 +3,27 @@ author: Bastien Gatellier
 description: Analyze URLs using Heart
 inputs:
   analysisService:
-    description: Service name that analyze the URL (e.g. greenit)
+    description: |
+      Service name that analyze the URL.
+      Available values: dareboost, greenit, lighthouse, observatory, ssllabs-server
     required: true
     default: ''
   file:
-    description: Path to the JSON configuration file
+    description: Set the file path to the JSON configuration used by the analysis service.
     required: false
     default: ''
   inline:
-    description: Inlined JSON configuration definition
+    description: Set the inline string of the JSON configuration used by the analysis service.
     required: false
     default: ''
   threshold:
-    description: A threshold between 0 and 100 that you want to reach with the analysis
+    description: Check if the score of the result reaches the given threshold (between 0 and 100).
     required: false
     default: ''
   listenerServices:
-    description: Services names that process the result of the analyze, separated by commas (e.g. slack,bigquery)
+    description: |
+      Services names that process the result of the analyze, separated by commas.
+      Available values: bigquery, slack
     required: false
     default: ''
 runs:
