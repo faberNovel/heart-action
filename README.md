@@ -5,7 +5,7 @@ This GitHub action make it easier the use of [Heart](https://heart.fabernovel.co
 ## Usage
 
 ```yaml
-- uses: faberNovel/heart-action@3
+- uses: faberNovel/heart-action@v3
   with:
     # [Required]
     # Service name that analyze the URL.
@@ -35,7 +35,7 @@ This GitHub action make it easier the use of [Heart](https://heart.fabernovel.co
 ```yaml
 jobs:
     steps:
-      - uses: faberNovel/heart-action@3
+      - uses: faberNovel/heart-action@v3
         with:
           analysisService: "lighthouse"
           inline: '{"url":"https://heart.fabernovel.com"}'
@@ -61,7 +61,7 @@ jobs:
             "conf/accessibility/mobile.json",
         ]
     steps:
-      - uses: faberNovel/heart-action@3
+      - uses: faberNovel/heart-action@v3
         with:
           analysisService: "lighthouse"
           file: ${{ matrix.lighthouse_configuration }}
