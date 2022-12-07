@@ -1,15 +1,11 @@
-FROM node:14
+# use a Node.js image with Chrome installed, because of @fabernovel/heart-greenit
+FROM timbru31/node-chrome:14
 
-# install Google Chrome (required by the @fabernovel/heart-greenit module)
-RUN \
-  wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add - && \
-  echo "deb http://dl.google.com/linux/chrome/deb/ stable main" > /etc/apt/sources.list.d/google.list && \
-  apt-get update && \
-  apt-get install -y google-chrome-stable && \
-  rm -rf /var/lib/apt/lists/*
+# set environment variable to make the @fabernovel/heart-greenit module work
 ENV CHROME_PATH=/usr/bin/google-chrome-stable
-ENV PUPPETEER_EXECUTABLE_PATH=/usr/bin/google-chrome-stable
 
 COPY entrypoint.sh /entrypoint.sh
 ENTRYPOINT ["/entrypoint.sh"]
+
+# set bash as the default shell
 SHELL ["/bin/bash", "-c"]

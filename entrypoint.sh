@@ -18,11 +18,12 @@ generate_installable_modules() {
 
   # add listener services
   if [ -n "$listenerServices" ]; then
-      servicesNames+=" ${listenerServices//,/ }"
+    servicesNames+=" ${listenerServices//,/ }"
   fi
 
   # build the package names from the services names (add the @fabernovel/heart- prefix)
   packagesNames=$packageNamePrefix${servicesNames// / $packageNamePrefix}
+
   # fix packages version
   echo ${packagesNames// /$packageMajorVersionIndicator }$packageMajorVersionIndicator
 }
@@ -37,6 +38,9 @@ generate_heart_command() {
   echo $analysisService$cliOptions
 }
 
+# install dependencies
 npm init --yes > /dev/null
 npm install $(generate_installable_modules)
+
+# run the heart command
 npx heart $(generate_heart_command)
