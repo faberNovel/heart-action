@@ -4,15 +4,12 @@
   "description": "This GitHub action make it easier the use of Heart in your CI workflow.",
   "main": "index.js",
   "dependencies": {
-    "@fabernovel/heart-bigquery": "^3.3.0",
     "@fabernovel/heart-cli": "^3.3.0",
     "@fabernovel/heart-greenit": "^3.1.0",
     "@fabernovel/heart-lighthouse": "^3.1.0",
     "@fabernovel/heart-observatory": "^3.4.0",
-    "@fabernovel/heart-slack": "^3.4.0",
     "@fabernovel/heart-ssllabs-server": "^3.3.0"
   },
-  "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },

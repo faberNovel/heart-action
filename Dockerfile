@@ -1,18 +1,12 @@
-# use a Node.js image with Chrome installed, because of @fabernovel/heart-greenit
-FROM timbru31/node-chrome:14
-
-# install packages that do not require an environment variable without default value (a secret for example).
-# the reason is that Heart:^3.0.0 checks these first when the CLI is triggered, whatever the modules used in the CLI.
-# for example, the Dareboost module is not installed here otherwise the environment variable for the API key
-# will be checked before starting the analyze, even if the user wants do it with another analysis module.
-RUN npm install
+# use a Node.js image with Chrome installed, because @fabernovel/heart-greenit requires Chrome installed.
+# use latest Node.js LTS instead of Node.js 14 (which is the version supported by Heart) because of
+# an unresolvable bug with node-gyp during installation with Node.js 14 / NPM 6.
+FROM timbru31/node-chrome:18
 
 # set environment variable to make the @fabernovel/heart-greenit module work
 ENV CHROME_PATH=/usr/bin/google-chrome-stable
 
 COPY entrypoint.sh /entrypoint.sh
-COPY package.json /package.json
-COPY package-lock.json /package-lock.json
 
 ENTRYPOINT ["/entrypoint.sh"]
 

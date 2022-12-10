@@ -55,7 +55,7 @@ runs:
   image: Dockerfile
   args:
     - ${{ inputs.analysisService }}
-    - ${ $GITHUB_WORKSPACE }/${{ inputs.file }}
+    - ${{ inputs.file }}
     - ${{ inputs.inline }}
     - ${{ inputs.threshold }}
     - ${{ inputs.listenerServices }}
