@@ -1,8 +1,11 @@
 name: Heart
 author: Bastien Gatellier
 description: Analyze URLs using Heart
+branding:
+  icon: heart
+  color: purple
 inputs:
-  analysisService:
+  analysis_service:
     description: |
       Service name that analyze the URL.
       Available values: dareboost, greenit, lighthouse, observatory, ssllabs-server
@@ -20,7 +23,7 @@ inputs:
     description: Check if the score of the result reaches the given threshold (between 0 and 100).
     required: false
     default: ''
-  listenerServices:
+  listener_services:
     description: |
       Services names that process the result of the analyze, separated by commas.
       Available values: bigquery, slack
@@ -54,11 +57,11 @@ runs:
   using: docker
   image: Dockerfile
   args:
-    - ${{ inputs.analysisService }}
+    - ${{ inputs.analysis_service }}
     - ${{ inputs.file }}
     - ${{ inputs.inline }}
     - ${{ inputs.threshold }}
-    - ${{ inputs.listenerServices }}
+    - ${{ inputs.listener_services }}
   env:
     DAREBOOST_API_TOKEN: ${{ inputs.dareboost_api_token }}
     GOOGLE_APPLICATION_CREDENTIALS: ${{ inputs.google_application_credentials }}
