@@ -56,7 +56,7 @@ This GitHub action make it easier the use of [Heart](https://heart.fabernovel.co
 
 ## Examples
 
-### Single analysis service, single URL
+### One analysis service, one URL
 
 ```yaml
 on:
@@ -66,8 +66,8 @@ on:
 
 jobs:
   analyze:
-    name: 🔬 Analyse https://heart.fabernovel.com with Mozilla Observatory
     runs-on: ubuntu-latest
+    name: 🔬 Analyse https://heart.fabernovel.com with Mozilla Observatory
 
     steps:
       - uses: faberNovel/heart-action@v3
@@ -79,7 +79,7 @@ jobs:
 
 ```
 
-### Single analysis service, multiple URLs
+### One analysis service, several URLs
 
 ```yaml
 on:
@@ -88,7 +88,8 @@ on:
     - cron:  '0 1 * * 0'
 
 jobs:
-  lighthouse_configuration_matrix:
+  lighthouse:
+    runs-on: ubuntu-latest
     name: |
       🔬 Analyse the home, product, search and accessibility pages
       on both desktop and mobile with Google Lighthouse
@@ -115,7 +116,7 @@ jobs:
 
 ```
 
-### Several analysis services, single URL
+### Several analysis services, one URL
 
 ```yaml
 on:
@@ -125,8 +126,8 @@ on:
 
 jobs:
   greenit:
-    name: 🔬 Analyze the website with GreenIT
     runs-on: ubuntu-latest
+    name: 🔬 Analyze the website with GreenIT
 
     steps:
       - uses: faberNovel/heart-action@v3
@@ -137,14 +138,77 @@ jobs:
           slack_api_token: ${{ secrets.SLACK_API_TOKEN }}
 
   lighthouse:
-    name: 🔬 Analyze the website with Google Lighthouse
     runs-on: ubuntu-latest
+    name: 🔬 Analyze the website with Google Lighthouse
 
     steps:
       - uses: faberNovel/heart-action@v3
         with:
           analysis_service: lighthouse
           file: analysis/conf/lighthouse.json
+          listener_services: slack
+          slack_api_token: ${{ secrets.SLACK_API_TOKEN }}
+
+```
+
+### Several analysis services, several URLs
+
+```yaml
+on:
+  schedule:
+    # All sunday at 1AM
+    - cron:  '0 1 * * 0'
+
+jobs:
+  greenit:
+    runs-on: ubuntu-latest
+    name: |
+      🔬 Analyse the home, product, search and accessibility pages
+      on both desktop and mobile with GreenIT
+    strategy:
+      matrix:
+        greenit_configuration: [
+            "conf/greenit/home/desktop.json",
+            "conf/greenit/home/mobile.json",
+            "conf/greenit/product/desktop.json",
+            "conf/greenit/product/mobile.json",
+            "conf/greenit/search/desktop.json",
+            "conf/greenit/search/mobile.json",
+            "conf/greenit/accessibility/desktop.json",
+            "conf/greenit/accessibility/mobile.json",
+        ]
+
+    steps:
+      - uses: faberNovel/heart-action@v3
+        with:
+          analysis_service: greenit
+          file: ${{ matrix.greenit_configuration }}
+          listener_services: slack
+          slack_api_token: ${{ secrets.SLACK_API_TOKEN }}
+
+  lighthouse:
+    runs-on: ubuntu-latest
+    name: |
+      🔬 Analyse the home, product, search and accessibility pages
+      on both desktop and mobile with Google Lighthouse
+    strategy:
+      matrix:
+        lighthouse_configuration: [
+            "conf/lighthouse/home/desktop.json",
+            "conf/lighthouse/home/mobile.json",
+            "conf/lighthouse/product/desktop.json",
+            "conf/lighthouse/product/mobile.json",
+            "conf/lighthouse/search/desktop.json",
+            "conf/lighthouse/search/mobile.json",
+            "conf/lighthouse/accessibility/desktop.json",
+            "conf/lighthouse/accessibility/mobile.json",
+        ]
+    
+    steps:
+      - uses: faberNovel/heart-action@v3
+        with:
+          analysis_service: lighthouse
+          file: ${{ matrix.lighthouse_configuration }}
           listener_services: slack
           slack_api_token: ${{ secrets.SLACK_API_TOKEN }}
 
