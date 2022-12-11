@@ -3,6 +3,7 @@
 # an unresolvable bug with node-gyp during installation with Node.js 14 / NPM 6.
 FROM timbru31/node-chrome:18
 
+# weird missing library with @fabernovel/heart-greenit
 RUN apt-get update && \
     apt-get -yq install libx11-xcb1
 
@@ -10,7 +11,7 @@ RUN apt-get update && \
 ENV CHROME_PATH=/usr/bin/google-chrome-stable
 
 # lighter setup that could only work when @fabernovel/heart-lighthouse will rely on an "internal" browser (probably v4).
-# by using pupeeter/chromium like @fabernovel/heart-lighthouse already does, there will be no need to installa an external vcersion of Chrome.
+# by using pupeeter/chromium like @fabernovel/heart-lighthouse already does, there will be no need to install an external version of Chrome.
 #
 # FROM node:18
 #

@@ -59,6 +59,11 @@ This GitHub action make it easier the use of [Heart](https://heart.fabernovel.co
 ### Single analysis service, single URL
 
 ```yaml
+on:
+  schedule:
+    # All sunday at 1AM
+    - cron:  '0 1 * * 0'
+
 jobs:
   analyze:
     name: 🔬 Analyse https://heart.fabernovel.com with Mozilla Observatory
@@ -77,6 +82,11 @@ jobs:
 ### Single analysis service, multiple URLs
 
 ```yaml
+on:
+  schedule:
+    # All sunday at 1AM
+    - cron:  '0 1 * * 0'
+
 jobs:
   lighthouse_configuration_matrix:
     name: |
@@ -108,6 +118,11 @@ jobs:
 ### Several analysis services, single URL
 
 ```yaml
+on:
+  schedule:
+    # All sunday at 1AM
+    - cron:  '0 1 * * 0'
+
 jobs:
   greenit:
     name: 🔬 Analyze the website with GreenIT
