@@ -67,7 +67,7 @@ on:
 jobs:
   analyze:
     runs-on: ubuntu-latest
-    name: 🔬 Analyse https://heart.fabernovel.com with Mozilla Observatory
+    name: 🔬 Analyse heart.fabernovel.com with Mozilla Observatory
 
     steps:
       - uses: faberNovel/heart-action@v3
@@ -90,9 +90,7 @@ on:
 jobs:
   lighthouse:
     runs-on: ubuntu-latest
-    name: |
-      🔬 Analyse the home, product, search and accessibility pages
-      on both desktop and mobile with Google Lighthouse
+    name: 🔬 Analyze the website with Google Lighthouse
     strategy:
       matrix:
         lighthouse_configuration: [
@@ -162,9 +160,7 @@ on:
 jobs:
   greenit:
     runs-on: ubuntu-latest
-    name: |
-      🔬 Analyse the home, product, search and accessibility pages
-      on both desktop and mobile with GreenIT
+    name: 🔬 Analyze the website with GreenIT
     strategy:
       matrix:
         greenit_configuration: [
@@ -188,9 +184,7 @@ jobs:
 
   lighthouse:
     runs-on: ubuntu-latest
-    name: |
-      🔬 Analyse the home, product, search and accessibility pages
-      on both desktop and mobile with Google Lighthouse
+    name: 🔬 Analyze the website with Google Lighthouse
     strategy:
       matrix:
         lighthouse_configuration: [
