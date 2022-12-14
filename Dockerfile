@@ -4,8 +4,8 @@
 FROM timbru31/node-chrome:18
 
 # weird missing library with @fabernovel/heart-greenit
-RUN apt-get update && \
-    apt-get -yq install libx11-xcb1
+# RUN apt-get update && \
+#     apt-get -yq install libx11-xcb1
 
 # set environment variable to make the @fabernovel/heart-lighthouse module work
 ENV CHROME_PATH=/usr/bin/google-chrome-stable

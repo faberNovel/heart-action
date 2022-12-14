@@ -9,7 +9,7 @@ This GitHub action make it easier the use of [Heart](https://heart.fabernovel.co
   with:
     # [Required]
     # Service name that analyze the URL.
-    # Available values: dareboost,greenit,lighthouse,observatory,ssllabs-server
+    # Available values: greenit,lighthouse,observatory,ssllabs-server
     analysis_service: observatory
 
     # [Required]
@@ -26,10 +26,6 @@ This GitHub action make it easier the use of [Heart](https://heart.fabernovel.co
     # Services names that process the result of the analyze, separated by commas.
     # Available values: bigquery,slack
     listener_services: slack
-    
-    # [Optional]
-    # Only required if you set "dareboost" as analysis_service
-    dareboost_api_token: 
 
     # [Optional]
     # Only required if you set "bigquery" as listener_services
