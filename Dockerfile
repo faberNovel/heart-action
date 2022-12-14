@@ -3,9 +3,11 @@
 # an unresolvable bug with node-gyp during installation with Node.js 14 / NPM 6.
 FROM timbru31/node-chrome:18
 
-# weird missing library with @fabernovel/heart-greenit
-# RUN apt-get update && \
-#     apt-get -yq install libx11-xcb1
+# weird missing library with @fabernovel/heart-greenit (maybe because of an outdated Chromium version):
+# Error: Failed to launch the browser process!
+# /node_modules/puppeteer/.local-chromium/linux-818858/chrome-linux/chrome: error while loading shared libraries: libX11-xcb.so.1: cannot open shared object file: No such file or directory
+RUN apt-get update && \
+    apt-get -yq install libx11-xcb1
 
 # set environment variable to make the @fabernovel/heart-lighthouse module work
 ENV CHROME_PATH=/usr/bin/google-chrome-stable
