@@ -107,8 +107,7 @@ jobs:
           file: ${{ matrix.lighthouse_configuration }}
           listener_services: slack
           slack_api_token: ${{ secrets.SLACK_API_TOKEN }}
-        # avoid that jobs do not start because previous ones fail.
-        # there is 8 analysis in this job, and if the first fails the next ones can still start, thanks to this instruction.
+        # prevent jobs from being blocked by a previous failed job.
         continue-on-error: true
 
 ```
@@ -180,8 +179,7 @@ jobs:
           file: ${{ matrix.greenit_configuration }}
           listener_services: slack
           slack_api_token: ${{ secrets.SLACK_API_TOKEN }}
-        # avoid that jobs do not start because previous ones fail.
-        # there is 8 analysis in this job, and if the first fails the next ones can still start, thanks to this instruction.
+        # prevent jobs from being blocked by a previous failed job.
         continue-on-error: true
 
   lighthouse:
@@ -207,8 +205,7 @@ jobs:
           file: ${{ matrix.lighthouse_configuration }}
           listener_services: slack
           slack_api_token: ${{ secrets.SLACK_API_TOKEN }}
-        # avoid that jobs do not start because previous ones fail.
-        # there is 8 analysis in this job, and if the first fails the next ones can still start, thanks to this instruction.
+        # prevent jobs from being blocked by a previous failed job.
         continue-on-error: true
 
 ```
