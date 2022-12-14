@@ -38,12 +38,12 @@ This GitHub action make it easier the use of [Heart](https://heart.fabernovel.co
     # [Optional]
     # If you use your own instance of Mozilla Observatory, use this setting to set the server API URL.
     # See https://github.com/mozilla/http-observatory#running-a-local-scanner-with-docker
-    observatory_api_url:
+    observatory_api_url: https://http-observatory.security.mozilla.org/api/v1/
 
     # [Optional]
     # If you use your own instance of Mozilla Observatory, use this setting to set the website URL.
     # See https://github.com/mozilla/http-observatory#running-a-local-scanner-with-docker
-    observatory_analyze_url:
+    observatory_analyze_url: https://observatory.mozilla.org/analyze/
 
     # [Optional]
     # Only required if you set "slack" as listener_services
@@ -51,7 +51,7 @@ This GitHub action make it easier the use of [Heart](https://heart.fabernovel.co
 
     # [Optional]
     # Customize the Slack channel where the notifications are send (default: #heart)
-    slack_channel_id:
+    slack_channel_id: '#heart-analysis'
 ```
 
 ## Examples
@@ -90,7 +90,7 @@ on:
 jobs:
   lighthouse:
     runs-on: ubuntu-latest
-    name: 🔬 Analyze the website with Google Lighthouse
+    name: 🔬 Analyze with Google Lighthouse
     strategy:
       matrix:
         lighthouse_configuration: [
@@ -111,6 +111,9 @@ jobs:
           file: ${{ matrix.lighthouse_configuration }}
           listener_services: slack
           slack_api_token: ${{ secrets.SLACK_API_TOKEN }}
+        # avoid that jobs do not start because previous ones fail.
+        # there is 8 analysis in this job, and if the first fails the next ones can still start, thanks to this instruction.
+        continue-on-error: true
 
 ```
 
@@ -125,7 +128,7 @@ on:
 jobs:
   greenit:
     runs-on: ubuntu-latest
-    name: 🔬 Analyze the website with GreenIT
+    name: 🔬 Analyze with GreenIT
 
     steps:
       - uses: faberNovel/heart-action@v3
@@ -137,7 +140,7 @@ jobs:
 
   lighthouse:
     runs-on: ubuntu-latest
-    name: 🔬 Analyze the website with Google Lighthouse
+    name: 🔬 Analyze with Google Lighthouse
 
     steps:
       - uses: faberNovel/heart-action@v3
@@ -160,7 +163,7 @@ on:
 jobs:
   greenit:
     runs-on: ubuntu-latest
-    name: 🔬 Analyze the website with GreenIT
+    name: 🔬 Analyze with GreenIT
     strategy:
       matrix:
         greenit_configuration: [
@@ -181,10 +184,13 @@ jobs:
           file: ${{ matrix.greenit_configuration }}
           listener_services: slack
           slack_api_token: ${{ secrets.SLACK_API_TOKEN }}
+        # avoid that jobs do not start because previous ones fail.
+        # there is 8 analysis in this job, and if the first fails the next ones can still start, thanks to this instruction.
+        continue-on-error: true
 
   lighthouse:
     runs-on: ubuntu-latest
-    name: 🔬 Analyze the website with Google Lighthouse
+    name: 🔬 Analyze with Google Lighthouse
     strategy:
       matrix:
         lighthouse_configuration: [
@@ -205,5 +211,8 @@ jobs:
           file: ${{ matrix.lighthouse_configuration }}
           listener_services: slack
           slack_api_token: ${{ secrets.SLACK_API_TOKEN }}
+        # avoid that jobs do not start because previous ones fail.
+        # there is 8 analysis in this job, and if the first fails the next ones can still start, thanks to this instruction.
+        continue-on-error: true
 
 ```
