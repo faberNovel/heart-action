@@ -1,6 +1,6 @@
-name: Heart
+name: Heart (webpages evaluation)
 author: Bastien Gatellier
-description: Analyze URLs using Heart
+description: Evaluate webpages (GreenIT, performances, security) using Heart
 branding:
   icon: heart
   color: purple
