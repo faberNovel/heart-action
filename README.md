@@ -1,6 +1,6 @@
-# Heart: evaluate web pages (GreenIT, performances, security)
+# Heart: evaluate webpages (GreenIT, performances, security)
 
-This GitHub action make it easier the use of [Heart](https://heart.fabernovel.com) in your CI workflow.
+This GitHub action make it easier to use [Heart](https://heart.fabernovel.com) in your CI workflow.
 
 ## Usage
 
