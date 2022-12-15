@@ -1,0 +1,71 @@
+name: Heart
+author: Bastien Gatellier
+description: Analyze URLs using Heart
+branding:
+  icon: heart
+  color: purple
+inputs:
+  analysis_service:
+    description: |
+      Service name that analyze the URL.
+      Available values: dareboost, greenit, lighthouse, observatory, ssllabs-server
+    required: true
+    default: ''
+  file:
+    description: Set the file path to the JSON configuration used by the analysis service.
+    required: false
+    default: ''
+  inline:
+    description: Set the inline string of the JSON configuration used by the analysis service.
+    required: false
+    default: ''
+  threshold:
+    description: Check if the score of the result reaches the given threshold (between 0 and 100).
+    required: false
+    default: ''
+  listener_services:
+    description: |
+      Services names that process the result of the analyze, separated by commas.
+      Available values: bigquery, slack
+    required: false
+    default: ''
+  dareboost_api_token:
+    description: Dareboost API token
+    required: false
+    default: ''
+  google_application_credentials:
+    description: Google Service account
+    required: false
+    default: ''
+  observatory_api_url:
+    description: Location of the Observatory API
+    required: false
+    default: ''
+  observatory_analyze_url:
+    description: Location of the Observatory website that provides the results
+    required: false
+    default: ''
+  slack_api_token:
+    description: Slack API token
+    required: false
+    default: ''
+  slack_channel_id:
+    description: Slack channel where the analysis results will be send
+    required: false
+    default: ''
+runs:
+  using: docker
+  image: Dockerfile
+  args:
+    - ${{ inputs.analysis_service }}
+    - ${{ inputs.file }}
+    - ${{ inputs.inline }}
+    - ${{ inputs.threshold }}
+    - ${{ inputs.listener_services }}
+  env:
+    DAREBOOST_API_TOKEN: ${{ inputs.dareboost_api_token }}
+    GOOGLE_APPLICATION_CREDENTIALS: ${{ inputs.google_application_credentials }}
+    OBSERVATORY_API_URL: ${{ inputs.observatory_api_url }}
+    OBSERVATORY_ANALYZE_URL: ${{ inputs.observatory_analyze_url }}
+    SLACK_API_TOKEN: ${{ inputs.slack_api_token }}
+    SLACK_CHANNEL_ID: ${{ inputs.slack_channel_id }}
