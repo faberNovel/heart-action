@@ -20,8 +20,9 @@ This GitHub Action make use of the CLI tool [Heart](https://heart.fabernovel.com
     analysis_service: observatory
 
     # [Required]
-    # Set the JSON configuration used by the analysis service.
-    # Either with a file path OR an inline string.
+    # Set the JSON configuration used by the analysis service, either with a file path OR an inline string.
+    # The configuration format depends of each service, and is detailed in the READMEs of Heart: https://github.com/faberNovel/heart/tree/master/modules
+    # Example for the Mozilla Observatory service: https://github.com/faberNovel/heart/tree/master/modules/heart-observatory
     file: conf/observatory.json
     inline: '{"host":"heart.fabernovel.com"}'
 
@@ -35,22 +36,22 @@ This GitHub Action make use of the CLI tool [Heart](https://heart.fabernovel.com
     listener_services: slack
 
     # [Optional]
-    # Only required if you set "bigquery" as listener_services
-    google_application_credentials:
+    # Only required if you use "bigquery" as a listener_services
+    google_application_credentials: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}
 
     # [Optional]
     # If you use your own instance of Mozilla Observatory, use this setting to set the server API URL.
-    # See https://github.com/mozilla/http-observatory#running-a-local-scanner-with-docker
+    # See https://github.com/mozilla/http-observatory#creating-a-local-installation-tested-on-ubuntu-15
     observatory_api_url: https://http-observatory.security.mozilla.org/api/v1/
 
     # [Optional]
     # If you use your own instance of Mozilla Observatory, use this setting to set the website URL.
-    # See https://github.com/mozilla/http-observatory#running-a-local-scanner-with-docker
+    # See https://github.com/mozilla/http-observatory#creating-a-local-installation-tested-on-ubuntu-15
     observatory_analyze_url: https://observatory.mozilla.org/analyze/
 
     # [Optional]
-    # Only required if you set "slack" as listener_services
-    slack_api_token:
+    # Only required if you you use "slack" as a listener_services
+    slack_api_token: ${{ secrets.SLACK_API_TOKEN }}
 
     # [Optional]
     # Customize the Slack channel where the notifications are send (default: #heart)
