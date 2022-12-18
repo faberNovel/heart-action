@@ -1,6 +1,10 @@
-# Heart: evaluate webpages (GreenIT, performances, security)
+# Heart: evaluate webpages
 
-This GitHub action make it easier to use [Heart](https://heart.fabernovel.com) in your CI workflow.
+Evaluate webpages directly from your CI with [Google Lighthouse](https://pagespeed.web.dev/), <a href="https://www.ecoindex.fr/" hreflang="fr">GreenIT</a>, [Mozilla Observatory](https://observatory.mozilla.org/) or [SSLLabs Server](https://www.ssllabs.com/ssltest/).
+
+And retrive it in a [Slack](https://slack.com/) channel or in a [Google Bigquery](https://cloud.google.com/bigquery]) database.
+
+This GitHub Action make use of the CLI tool [Heart](https://heart.fabernovel.com).
 
 ## Usage
 
