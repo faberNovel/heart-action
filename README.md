@@ -1,3 +1,6 @@
+[![tag badge](https://img.shields.io/github/v/tag/faberNovel/heart-action)](https://github.com/faberNovel/heart-action/tags)
+[![license badge](https://img.shields.io/github/license/faberNovel/heart-action)](./LICENSE)
+
 # Heart: evaluate webpages
 
 Evaluate webpages directly from your CI with [Google Lighthouse](https://pagespeed.web.dev/), <a href="https://www.ecoindex.fr/" hreflang="fr">GreenIT</a>, [Mozilla Observatory](https://observatory.mozilla.org/) or [SSLLabs Server](https://www.ssllabs.com/ssltest/).
