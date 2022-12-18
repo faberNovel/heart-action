@@ -1,11 +1,18 @@
-# Heart: evaluate webpages (GreenIT, performances, security)
+[![tag badge](https://img.shields.io/github/v/tag/faberNovel/heart-action)](https://github.com/faberNovel/heart-action/tags)
+[![license badge](https://img.shields.io/github/license/faberNovel/heart-action)](./LICENSE)
 
-This GitHub action make it easier to use [Heart](https://heart.fabernovel.com) in your CI workflow.
+# Heart: evaluate webpages
+
+Evaluate webpages directly from your CI with [Google Lighthouse](https://pagespeed.web.dev/), <a href="https://www.ecoindex.fr/" hreflang="fr">GreenIT</a>, [Mozilla Observatory](https://observatory.mozilla.org/) or [SSLLabs Server](https://www.ssllabs.com/ssltest/).
+
+Retrieve the evaluations in a [Slack](https://slack.com/) channel or in a [Google Bigquery](https://cloud.google.com/bigquery]) database.
+
+This GitHub Action make use of the CLI tool [Heart](https://heart.fabernovel.com).
 
 ## Usage
 
 ```yaml
-- uses: faberNovel/heart-action@v3
+- uses: faberNovel/heart-action@v1.0.0
   with:
     # [Required]
     # Service name that analyze the URL.
@@ -13,8 +20,9 @@ This GitHub action make it easier to use [Heart](https://heart.fabernovel.com) i
     analysis_service: observatory
 
     # [Required]
-    # Set the JSON configuration used by the analysis service.
-    # Either with a file path OR an inline string.
+    # Set the JSON configuration used by the analysis service, either with a file path OR an inline string.
+    # The configuration format depends of each service, and is detailed in the READMEs of Heart: https://github.com/faberNovel/heart/tree/master/modules
+    # Example for the Mozilla Observatory service: https://github.com/faberNovel/heart/tree/master/modules/heart-observatory
     file: conf/observatory.json
     inline: '{"host":"heart.fabernovel.com"}'
 
@@ -28,22 +36,22 @@ This GitHub action make it easier to use [Heart](https://heart.fabernovel.com) i
     listener_services: slack
 
     # [Optional]
-    # Only required if you set "bigquery" as listener_services
-    google_application_credentials:
+    # Only required if you use "bigquery" as a listener_services
+    google_application_credentials: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}
 
     # [Optional]
     # If you use your own instance of Mozilla Observatory, use this setting to set the server API URL.
-    # See https://github.com/mozilla/http-observatory#running-a-local-scanner-with-docker
+    # See https://github.com/mozilla/http-observatory#creating-a-local-installation-tested-on-ubuntu-15
     observatory_api_url: https://http-observatory.security.mozilla.org/api/v1/
 
     # [Optional]
     # If you use your own instance of Mozilla Observatory, use this setting to set the website URL.
-    # See https://github.com/mozilla/http-observatory#running-a-local-scanner-with-docker
+    # See https://github.com/mozilla/http-observatory#creating-a-local-installation-tested-on-ubuntu-15
     observatory_analyze_url: https://observatory.mozilla.org/analyze/
 
     # [Optional]
-    # Only required if you set "slack" as listener_services
-    slack_api_token:
+    # Only required if you you use "slack" as a listener_services
+    slack_api_token: ${{ secrets.SLACK_API_TOKEN }}
 
     # [Optional]
     # Customize the Slack channel where the notifications are send (default: #heart)
@@ -66,7 +74,7 @@ jobs:
     name: 🔬 Analyse heart.fabernovel.com with Mozilla Observatory
 
     steps:
-      - uses: faberNovel/heart-action@v3
+      - uses: faberNovel/heart-action@v1.0.0
         with:
           analysis_service: observatory
           inline: '{"host":"heart.fabernovel.com"}'
@@ -101,7 +109,7 @@ jobs:
         ]
     
     steps:
-      - uses: faberNovel/heart-action@v3
+      - uses: faberNovel/heart-action@v1.0.0
         with:
           analysis_service: lighthouse
           file: ${{ matrix.lighthouse_configuration }}
@@ -126,7 +134,7 @@ jobs:
     name: 🔬 Analyze with GreenIT
 
     steps:
-      - uses: faberNovel/heart-action@v3
+      - uses: faberNovel/heart-action@v1.0.0
         with:
           analysis_service: greenit
           file: analysis/conf/greenit.json
@@ -138,7 +146,7 @@ jobs:
     name: 🔬 Analyze with Google Lighthouse
 
     steps:
-      - uses: faberNovel/heart-action@v3
+      - uses: faberNovel/heart-action@v1.0.0
         with:
           analysis_service: lighthouse
           file: analysis/conf/lighthouse.json
@@ -173,7 +181,7 @@ jobs:
         ]
 
     steps:
-      - uses: faberNovel/heart-action@v3
+      - uses: faberNovel/heart-action@v1.0.0
         with:
           analysis_service: greenit
           file: ${{ matrix.greenit_configuration }}
@@ -199,7 +207,7 @@ jobs:
         ]
     
     steps:
-      - uses: faberNovel/heart-action@v3
+      - uses: faberNovel/heart-action@v1.0.0
         with:
           analysis_service: lighthouse
           file: ${{ matrix.lighthouse_configuration }}
