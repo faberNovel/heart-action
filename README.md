@@ -65,7 +65,7 @@ This GitHub Action make use of the CLI tool [Heart](https://heart.fabernovel.com
 ```yaml
 on:
   schedule:
-    # All sunday at 1AM
+    # Every sunday at 1AM
     - cron:  '0 1 * * 0'
 
 jobs:
@@ -88,7 +88,7 @@ jobs:
 ```yaml
 on:
   schedule:
-    # All sunday at 1AM
+    # Every sunday at 1AM
     - cron:  '0 1 * * 0'
 
 jobs:
@@ -125,7 +125,7 @@ jobs:
 ```yaml
 on:
   schedule:
-    # All sunday at 1AM
+    # Every sunday at 1AM
     - cron:  '0 1 * * 0'
 
 jobs:
@@ -160,7 +160,7 @@ jobs:
 ```yaml
 on:
   schedule:
-    # All sunday at 1AM
+    # Every sunday at 1AM
     - cron:  '0 1 * * 0'
 
 jobs:
