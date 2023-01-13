@@ -67,4 +67,5 @@ packages=$(generate_installable_packages "$analysisService" "$listenerServices")
 npm install $packages
 
 # run the heart command
-npx heart $(generate_heart_command "$repositoryName" "$analysisService" "$file" "$inline" "$threshold")
+command=$(generate_heart_command "$repositoryName" "$analysisService" "$file" "$inline" "$threshold")
+npx heart $command
