@@ -12,7 +12,7 @@ This GitHub Action make use of the CLI tool [Heart](https://heart.fabernovel.com
 ## Usage
 
 ```yaml
-- uses: faberNovel/heart-action@v1.0.1
+- uses: faberNovel/heart-action@v1
   with:
     # [Required]
     # Service name that analyze the URL.
@@ -74,7 +74,7 @@ jobs:
     name: 🔬 Analyse heart.fabernovel.com with Mozilla Observatory
 
     steps:
-      - uses: faberNovel/heart-action@v1.0.1
+      - uses: faberNovel/heart-action@v1
         with:
           analysis_service: observatory
           inline: '{"host":"heart.fabernovel.com"}'
@@ -109,7 +109,7 @@ jobs:
         ]
     
     steps:
-      - uses: faberNovel/heart-action@v1.0.1
+      - uses: faberNovel/heart-action@v1
         with:
           analysis_service: lighthouse
           file: ${{ matrix.lighthouse_configuration }}
@@ -134,7 +134,7 @@ jobs:
     name: 🔬 Analyze with GreenIT
 
     steps:
-      - uses: faberNovel/heart-action@v1.0.1
+      - uses: faberNovel/heart-action@v1
         with:
           analysis_service: greenit
           file: analysis/conf/greenit.json
@@ -146,7 +146,7 @@ jobs:
     name: 🔬 Analyze with Google Lighthouse
 
     steps:
-      - uses: faberNovel/heart-action@v1.0.1
+      - uses: faberNovel/heart-action@v1
         with:
           analysis_service: lighthouse
           file: analysis/conf/lighthouse.json
@@ -181,7 +181,7 @@ jobs:
         ]
 
     steps:
-      - uses: faberNovel/heart-action@v1.0.1
+      - uses: faberNovel/heart-action@v1
         with:
           analysis_service: greenit
           file: ${{ matrix.greenit_configuration }}
@@ -207,7 +207,7 @@ jobs:
         ]
     
     steps:
-      - uses: faberNovel/heart-action@v1.0.1
+      - uses: faberNovel/heart-action@v1
         with:
           analysis_service: lighthouse
           file: ${{ matrix.lighthouse_configuration }}
