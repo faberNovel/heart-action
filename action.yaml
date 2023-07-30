@@ -8,47 +8,49 @@ inputs:
   analysis_service:
     description: |
       Service name that analyze the URL.
-      Available values: greenit, lighthouse, observatory, ssllabs-server
+      Available values: greenit, lighthouse, observatory, ssllabs-server.
     required: true
     default: ''
   config:
     description: Configuration used by the analysis service. File path to a JSON file or JSON-inlined string.
-    required: false
+    required: true
     default: ''
   threshold:
     description: Check if the score of the result reaches the given threshold (between 0 and 100).
     required: false
     default: ''
-  except_listeners:
+  listener_services_except:
     description: |
-      Comma-separated list of listener services that will not be triggered once the analysis is done. 
-      Available values: bigquery, slack
+      Comma-separated list of listener services that will not be triggered once the analysis is done.
+      This parameter is mutually exclusive with the listener_services_only one.
+      Available values: mysql, slack.
     required: false
     default: ''
-  only_listeners:
+  listener_services_only:
     description: |
       Comma-separated list of listener services that will be triggered once the analysis is done.
-      Available values: bigquery, slack
+      This parameter is mutually exclusive with the listener_services_except one.
+      Available values: mysql, slack
     required: false
     default: ''
-  google_application_credentials:
-    description: Google Service account
+  mysql_database_url:
+    description: Location and credentials of your MySQL database, in a URL format.
     required: false
     default: ''
   observatory_api_url:
-    description: Location of the Observatory API
+    description: Location of the Observatory API.
     required: false
     default: ''
   observatory_analyze_url:
-    description: Location of the Observatory website that provides the results
+    description: Location of the Observatory website to view the the results.
     required: false
     default: ''
   slack_api_token:
-    description: Slack API token
+    description: Slack API token.
     required: false
     default: ''
   slack_channel_id:
-    description: Slack channel where the analysis results will be send
+    description: Slack channel where the analysis results will be send.
     required: false
     default: ''
 runs:
@@ -58,10 +60,10 @@ runs:
     - ${{ inputs.analysis_service }}
     - ${{ inputs.config }}
     - ${{ inputs.threshold }}
-    - ${{ inputs.except_listeners }}
-    - ${{ inputs.only_listeners }}
+    - ${{ inputs.listener_services_except }}
+    - ${{ inputs.listener_services_only }}
   env:
-    GOOGLE_APPLICATION_CREDENTIALS: ${{ inputs.google_application_credentials }}
+    MYSQL_DATABASE_URL: ${{ inputs.mysql_database_url }}
     OBSERVATORY_API_URL: ${{ inputs.observatory_api_url }}
     OBSERVATORY_ANALYZE_URL: ${{ inputs.observatory_analyze_url }}
     SLACK_API_TOKEN: ${{ inputs.slack_api_token }}
