@@ -5,57 +5,68 @@
 
 Evaluate webpages directly from your CI with [Google Lighthouse](https://pagespeed.web.dev/), <a href="https://www.ecoindex.fr/" hreflang="fr">GreenIT</a>, [Mozilla Observatory](https://observatory.mozilla.org/) or [SSLLabs Server](https://www.ssllabs.com/ssltest/).
 
-Retrieve the evaluations in a [Slack](https://slack.com/) channel or in a [Google Bigquery](https://cloud.google.com/bigquery]) database.
+Retrieve the evaluations in a [MySQL](https://www.mysql.com/) database or in a [Slack](https://slack.com/) channel.
 
 This GitHub Action make use of the CLI tool [Heart](https://heart.fabernovel.com).
 
 ## Usage
 
 ```yaml
-- uses: faberNovel/heart-action@v1
+- uses: faberNovel/heart-action@v2
   with:
     # [Required]
     # Service name that analyze the URL.
-    # Available values: greenit,lighthouse,observatory,ssllabs-server
-    analysis_service: observatory
+    # Available values: greenit, lighthouse, observatory, ssllabs-server.
+    analysis_service: lighthouse
 
     # [Required]
-    # Set the JSON configuration used by the analysis service, either with a file path OR an inline string.
+    # Configuration used by the analysis service. File path to a JSON file or JSON-inlined string.
     # The configuration format depends of each service, and is detailed in the READMEs of Heart: https://github.com/faberNovel/heart/tree/master/modules
-    # Example for the Mozilla Observatory service: https://github.com/faberNovel/heart/tree/master/modules/heart-observatory
-    file: conf/observatory.json
-    inline: '{"host":"heart.fabernovel.com"}'
+    # Example for the Google Lighthouse service: https://github.com/faberNovel/heart/tree/master/modules/lighthouse.
+    config: conf/lighthouse.json OR '{"url":"heart.fabernovel.com"}'
 
     # [Optional]
     # Check if the score of the result reaches the given threshold (between 0 and 100).
     threshold: 80
 
     # [Optional]
-    # Services names that process the result of the analyze, separated by commas.
-    # Available values: bigquery,slack
-    listener_services: slack
+    # Comma-separated list of listener services that will not be triggered once the analysis is done.
+    # This parameter is mutually exclusive with the listener_services_only one.
+    # Available values: mysql, slack.
+    listener_services_except: slack
 
     # [Optional]
-    # Only required if you use "bigquery" as a listener_services
-    google_application_credentials: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}
+    # Comma-separated list of listener services that will be triggered once the analysis is done.
+    # This parameter is mutually exclusive with the listener_services_except one.
+    # Available values: mysql, slack.
+    listener_services_only: mysql,slack
 
     # [Optional]
-    # If you use your own instance of Mozilla Observatory, use this setting to set the server API URL.
+    # Only required if you you use "mysql" as a listener_services_except or listener_services_only.
+    # Location and credentials of your MySQL database, in a URL format.
+    mysql_database_url: mysql://root@127.0.0.1:3306
+
+    # [Optional]
+    # Only required if you you use "observatyory" as analysis_service.
+    # Location of the Observatory API.
     # See https://github.com/mozilla/http-observatory#creating-a-local-installation-tested-on-ubuntu-15
     observatory_api_url: https://http-observatory.security.mozilla.org/api/v1/
 
     # [Optional]
-    # If you use your own instance of Mozilla Observatory, use this setting to set the website URL.
+    # Only required if you you use "observatyory" as analysis_service.
+    # Location of the Observatory website to view the the results.
     # See https://github.com/mozilla/http-observatory#creating-a-local-installation-tested-on-ubuntu-15
     observatory_analyze_url: https://observatory.mozilla.org/analyze/
 
     # [Optional]
-    # Only required if you you use "slack" as a listener_services
+    # Only required if you you use "slack" as a listener_services_except or listener_services_only.
+    # Slack API token.
     slack_api_token: ${{ secrets.SLACK_API_TOKEN }}
 
     # [Optional]
-    # Customize the Slack channel where the notifications are send (default: #heart)
-    slack_channel_id: '#heart-analysis'
+    # Only required if you you use "slack" as a listener_services_except or listener_services_only.
+    # Slack channel where the analysis results will be send.
+    slack_channel_id: 'heart'
 ```
 
 ## Examples
@@ -74,7 +85,7 @@ jobs:
     name: 🔬 Analyse heart.fabernovel.com with Mozilla Observatory
 
     steps:
-      - uses: faberNovel/heart-action@v1
+      - uses: faberNovel/heart-action@v2
         with:
           analysis_service: observatory
           inline: '{"host":"heart.fabernovel.com"}'
@@ -109,7 +120,7 @@ jobs:
         ]
     
     steps:
-      - uses: faberNovel/heart-action@v1
+      - uses: faberNovel/heart-action@v2
         with:
           analysis_service: lighthouse
           file: ${{ matrix.lighthouse_configuration }}
@@ -134,7 +145,7 @@ jobs:
     name: 🔬 Analyze with GreenIT
 
     steps:
-      - uses: faberNovel/heart-action@v1
+      - uses: faberNovel/heart-action@v2
         with:
           analysis_service: greenit
           file: analysis/conf/greenit.json
@@ -146,7 +157,7 @@ jobs:
     name: 🔬 Analyze with Google Lighthouse
 
     steps:
-      - uses: faberNovel/heart-action@v1
+      - uses: faberNovel/heart-action@v2
         with:
           analysis_service: lighthouse
           file: analysis/conf/lighthouse.json
@@ -181,7 +192,7 @@ jobs:
         ]
 
     steps:
-      - uses: faberNovel/heart-action@v1
+      - uses: faberNovel/heart-action@v2
         with:
           analysis_service: greenit
           file: ${{ matrix.greenit_configuration }}
@@ -207,7 +218,7 @@ jobs:
         ]
     
     steps:
-      - uses: faberNovel/heart-action@v1
+      - uses: faberNovel/heart-action@v2
         with:
           analysis_service: lighthouse
           file: ${{ matrix.lighthouse_configuration }}
