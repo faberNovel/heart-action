@@ -66,6 +66,7 @@ runs:
     - ${{ inputs.threshold }}
     - ${{ inputs.listener_services_except }}
     - ${{ inputs.listener_services_only }}
+    - ${{ inputs.verbose }}
   env:
     MYSQL_DATABASE_URL: ${{ inputs.mysql_database_url }}
     OBSERVATORY_API_URL: ${{ inputs.observatory_api_url }}
