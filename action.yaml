@@ -21,14 +21,14 @@ inputs:
     default: ''
   listener_services_except:
     description: |
-      Comma-separated list of listener services that will not be triggered once the analysis is done.
+      Comma-separated list (without spaces) of listener services that will not be triggered once the analysis is done.
       This parameter is mutually exclusive with the listener_services_only one.
       Available values: mysql, slack.
     required: false
     default: ''
   listener_services_only:
     description: |
-      Comma-separated list of listener services that will be triggered once the analysis is done.
+      Comma-separated list (without spaces) of listener services that will be triggered once the analysis is done.
       This parameter is mutually exclusive with the listener_services_except one.
       Available values: mysql, slack
     required: false
@@ -51,6 +51,10 @@ inputs:
     default: ''
   slack_channel_id:
     description: Slack channel where the analysis results will be send.
+    required: false
+    default: ''
+  verbose:
+    description: Displays debug information
     required: false
     default: ''
 runs:

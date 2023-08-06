@@ -67,6 +67,10 @@ This GitHub Action make use of the CLI tool [Heart](https://heart.fabernovel.com
     # Only required if you you use "slack" as a listener_services_except or listener_services_only.
     # Slack channel where the analysis results will be send.
     slack_channel_id: 'heart'
+
+    # [Optional]
+    # Display additional information when running Heart
+    verbose: false
 ```
 
 ## Examples
