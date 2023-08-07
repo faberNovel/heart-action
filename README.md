@@ -47,13 +47,13 @@ This GitHub Action make use of the CLI tool [Heart](https://heart.fabernovel.com
     mysql_database_url: mysql://root@127.0.0.1:3306
 
     # [Optional]
-    # Only required if you you use "observatyory" as analysis_service.
+    # Only required if you you use "observatory" as analysis_service.
     # Location of the Observatory API.
     # See https://github.com/mozilla/http-observatory#creating-a-local-installation-tested-on-ubuntu-15
     observatory_api_url: https://http-observatory.security.mozilla.org/api/v1/
 
     # [Optional]
-    # Only required if you you use "observatyory" as analysis_service.
+    # Only required if you you use "observatory" as analysis_service.
     # Location of the Observatory website to view the the results.
     # See https://github.com/mozilla/http-observatory#creating-a-local-installation-tested-on-ubuntu-15
     observatory_analyze_url: https://observatory.mozilla.org/analyze/
