@@ -92,7 +92,7 @@ jobs:
       - uses: faberNovel/heart-action@v2
         with:
           analysis_service: observatory
-          inline: '{"host":"heart.fabernovel.com"}'
+          config: '{"host":"heart.fabernovel.com"}'
           listener_services: slack
           slack_api_token: ${{ secrets.SLACK_API_TOKEN }}
 
@@ -127,7 +127,7 @@ jobs:
       - uses: faberNovel/heart-action@v2
         with:
           analysis_service: lighthouse
-          file: ${{ matrix.lighthouse_configuration }}
+          config: ${{ matrix.lighthouse_configuration }}
           listener_services: slack
           slack_api_token: ${{ secrets.SLACK_API_TOKEN }}
         # prevent jobs from being blocked by a previous failed job.
@@ -152,7 +152,7 @@ jobs:
       - uses: faberNovel/heart-action@v2
         with:
           analysis_service: greenit
-          file: analysis/conf/greenit.json
+          config: analysis/conf/greenit.json
           listener_services: slack
           slack_api_token: ${{ secrets.SLACK_API_TOKEN }}
 
@@ -164,7 +164,7 @@ jobs:
       - uses: faberNovel/heart-action@v2
         with:
           analysis_service: lighthouse
-          file: analysis/conf/lighthouse.json
+          config: analysis/conf/lighthouse.json
           listener_services: slack
           slack_api_token: ${{ secrets.SLACK_API_TOKEN }}
 
@@ -199,7 +199,7 @@ jobs:
       - uses: faberNovel/heart-action@v2
         with:
           analysis_service: greenit
-          file: ${{ matrix.greenit_configuration }}
+          config: ${{ matrix.greenit_configuration }}
           listener_services: slack
           slack_api_token: ${{ secrets.SLACK_API_TOKEN }}
         # prevent jobs from being blocked by a previous failed job.
@@ -225,7 +225,7 @@ jobs:
       - uses: faberNovel/heart-action@v2
         with:
           analysis_service: lighthouse
-          file: ${{ matrix.lighthouse_configuration }}
+          config: ${{ matrix.lighthouse_configuration }}
           listener_services: slack
           slack_api_token: ${{ secrets.SLACK_API_TOKEN }}
         # prevent jobs from being blocked by a previous failed job.
