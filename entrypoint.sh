@@ -37,7 +37,7 @@ git clone "$GITHUB_SERVER_URL/$GITHUB_REPOSITORY.git" --branch $GITHUB_REF_NAME 
 
 if [[ -f "cloned_repository/$config" ]]; then
   config="cloned_repository/$config"
-end
+fi
 
 # run the heart command
 command=$(generate_heart_command "$analysisService" "$config" "$threshold" "$exceptServices" "$onlyServices" "$verbose")
