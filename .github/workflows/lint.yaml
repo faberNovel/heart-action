@@ -24,3 +24,5 @@ jobs:
 
       - name: Lint Markdown
         uses: DavidAnson/markdownlint-cli2-action@v11
+        with:
+          config: .markdownlint.yaml
