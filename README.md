@@ -3,9 +3,13 @@
 
 # Heart: evaluate webpages
 
-Evaluate webpages directly from your CI with [Google Lighthouse](https://pagespeed.web.dev/), <a href="https://www.ecoindex.fr/" hreflang="fr">GreenIT</a>, [Mozilla Observatory](https://observatory.mozilla.org/) or [SSLLabs Server](https://www.ssllabs.com/ssltest/).
+Evaluate webpages directly from your CI with [Google Lighthouse](https://pagespeed.web.dev/),
+<a href="https://www.ecoindex.fr/" hreflang="fr">GreenIT</a>,
+[Mozilla Observatory](https://observatory.mozilla.org/)
+or [SSLLabs Server](https://www.ssllabs.com/ssltest/).
 
-Retrieve the evaluations in a [MySQL](https://www.mysql.com/) database or in a [Slack](https://slack.com/) channel.
+Retrieve the evaluations in a [MySQL](https://www.mysql.com/) database
+or in a [Slack](https://slack.com/) channel.
 
 This GitHub Action make use of the CLI tool [Heart](https://heart.fabernovel.com).
 
