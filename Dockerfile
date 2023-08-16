@@ -1,4 +1,4 @@
-FROM bgatellier/heart:4.0.0-alpha.9
+FROM fabernovel/heart:v4.0.0-alpha.9
 
 # set bash as the default shell
 SHELL ["/bin/bash", "-c"]
