@@ -48,7 +48,7 @@ This GitHub Action make use of the CLI tool [Heart](https://heart.fabernovel.com
     # [Optional]
     # Only required if you you use "mysql" as a listener_services_except or listener_services_only.
     # Location and credentials of your MySQL database, in a URL format.
-    mysql_database_url: mysql://root@127.0.0.1:3306
+    mysql_database_url: login:password@127.0.0.1:3306
 
     # [Optional]
     # Only required if you you use "observatory" as analysis_service.
