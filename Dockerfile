@@ -1,4 +1,4 @@
-FROM fabernovel/heart:v4.0.0
+FROM fabernovel/heart:v4.0.1
 
 # set bash as the default shell
 SHELL ["/bin/bash", "-c"]
