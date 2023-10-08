@@ -45,8 +45,8 @@ inputs:
     description: Location of the Observatory website to view the the results.
     required: false
     default: ''
-  slack_api_token:
-    description: Slack API token.
+  slack_access_token:
+    description: Slack access token.
     required: false
     default: ''
   slack_channel_id:
@@ -71,5 +71,5 @@ runs:
     HEART_MYSQL_DATABASE_URL: ${{ inputs.mysql_database_url }}
     HEART_OBSERVATORY_API_URL: ${{ inputs.observatory_api_url }}
     HEART_OBSERVATORY_ANALYZE_URL: ${{ inputs.observatory_analyze_url }}
-    HEART_SLACK_API_TOKEN: ${{ inputs.slack_api_token }}
+    HEART_SLACK_ACCESS_TOKEN: ${{ inputs.slack_access_token }}
     HEART_SLACK_CHANNEL_ID: ${{ inputs.slack_channel_id }}
