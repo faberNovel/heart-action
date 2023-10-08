@@ -1,0 +1,3 @@
+ignored:
+  # Disable pin versions in apt get install, as versions can disappear from the registry
+  - "DL3008"
