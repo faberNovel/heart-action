@@ -64,8 +64,8 @@ This GitHub Action make use of the CLI tool [Heart](https://heart.fabernovel.com
 
     # [Optional]
     # Only required if you you use "slack" as a listener_services_except or listener_services_only.
-    # Slack API token.
-    slack_api_token: ${{ secrets.SLACK_API_TOKEN }}
+    # Slack access token.
+    slack_access_token: ${{ secrets.SLACK_ACCESS_TOKEN }}
 
     # [Optional]
     # Only required if you you use "slack" as a listener_services_except or listener_services_only.
@@ -98,7 +98,7 @@ jobs:
           analysis_service: observatory
           config: '{"host":"heart.fabernovel.com"}'
           listener_services: slack
-          slack_api_token: ${{ secrets.SLACK_API_TOKEN }}
+          slack_access_token: ${{ secrets.SLACK_ACCESS_TOKEN }}
 
 ```
 
@@ -133,7 +133,7 @@ jobs:
           analysis_service: lighthouse
           config: ${{ matrix.lighthouse_configuration }}
           listener_services: slack
-          slack_api_token: ${{ secrets.SLACK_API_TOKEN }}
+          slack_access_token: ${{ secrets.SLACK_ACCESS_TOKEN }}
         # prevent jobs from being blocked by a previous failed job.
         continue-on-error: true
 
@@ -158,7 +158,7 @@ jobs:
           analysis_service: greenit
           config: analysis/conf/greenit.json
           listener_services: slack
-          slack_api_token: ${{ secrets.SLACK_API_TOKEN }}
+          slack_access_token: ${{ secrets.SLACK_ACCESS_TOKEN }}
 
   lighthouse:
     runs-on: ubuntu-latest
@@ -170,7 +170,7 @@ jobs:
           analysis_service: lighthouse
           config: analysis/conf/lighthouse.json
           listener_services: slack
-          slack_api_token: ${{ secrets.SLACK_API_TOKEN }}
+          slack_access_token: ${{ secrets.SLACK_ACCESS_TOKEN }}
 
 ```
 
@@ -205,7 +205,7 @@ jobs:
           analysis_service: greenit
           config: ${{ matrix.greenit_configuration }}
           listener_services: slack
-          slack_api_token: ${{ secrets.SLACK_API_TOKEN }}
+          slack_access_token: ${{ secrets.SLACK_ACCESS_TOKEN }}
         # prevent jobs from being blocked by a previous failed job.
         continue-on-error: true
 
@@ -231,7 +231,7 @@ jobs:
           analysis_service: lighthouse
           config: ${{ matrix.lighthouse_configuration }}
           listener_services: slack
-          slack_api_token: ${{ secrets.SLACK_API_TOKEN }}
+          slack_access_token: ${{ secrets.SLACK_ACCESS_TOKEN }}
         # prevent jobs from being blocked by a previous failed job.
         continue-on-error: true
 
