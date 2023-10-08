@@ -8,49 +8,53 @@ inputs:
   analysis_service:
     description: |
       Service name that analyze the URL.
-      Available values: dareboost, greenit, lighthouse, observatory, ssllabs-server
+      Available values: greenit, lighthouse, observatory, ssllabs-server.
     required: true
     default: ''
-  file:
-    description: Set the file path to the JSON configuration used by the analysis service.
-    required: false
-    default: ''
-  inline:
-    description: Set the inline string of the JSON configuration used by the analysis service.
-    required: false
+  config:
+    description: Configuration used by the analysis service. File path to a JSON file or JSON-inlined string.
+    required: true
     default: ''
   threshold:
     description: Check if the score of the result reaches the given threshold (between 0 and 100).
     required: false
     default: ''
-  listener_services:
+  listener_services_except:
     description: |
-      Services names that process the result of the analyze, separated by commas.
-      Available values: bigquery, slack
+      Comma-separated list (without spaces) of listener services that will not be triggered once the analysis is done.
+      This parameter is mutually exclusive with the listener_services_only one.
+      Available values: mysql, slack.
     required: false
     default: ''
-  dareboost_api_token:
-    description: Dareboost API token
+  listener_services_only:
+    description: |
+      Comma-separated list (without spaces) of listener services that will be triggered once the analysis is done.
+      This parameter is mutually exclusive with the listener_services_except one.
+      Available values: mysql, slack
     required: false
     default: ''
-  google_application_credentials:
-    description: Google Service account
+  mysql_database_url:
+    description: Location and credentials of your MySQL database, in a URL format.
     required: false
     default: ''
   observatory_api_url:
-    description: Location of the Observatory API
+    description: Location of the Observatory API.
     required: false
     default: ''
   observatory_analyze_url:
-    description: Location of the Observatory website that provides the results
+    description: Location of the Observatory website to view the the results.
     required: false
     default: ''
-  slack_api_token:
-    description: Slack API token
+  slack_access_token:
+    description: Slack access token.
     required: false
     default: ''
   slack_channel_id:
-    description: Slack channel where the analysis results will be send
+    description: Slack channel where the analysis results will be send.
+    required: false
+    default: ''
+  verbose:
+    description: Displays debug information
     required: false
     default: ''
 runs:
@@ -58,14 +62,14 @@ runs:
   image: Dockerfile
   args:
     - ${{ inputs.analysis_service }}
-    - ${{ inputs.file }}
-    - ${{ inputs.inline }}
+    - ${{ inputs.config }}
     - ${{ inputs.threshold }}
-    - ${{ inputs.listener_services }}
+    - ${{ inputs.listener_services_except }}
+    - ${{ inputs.listener_services_only }}
+    - ${{ inputs.verbose }}
   env:
-    DAREBOOST_API_TOKEN: ${{ inputs.dareboost_api_token }}
-    GOOGLE_APPLICATION_CREDENTIALS: ${{ inputs.google_application_credentials }}
-    OBSERVATORY_API_URL: ${{ inputs.observatory_api_url }}
-    OBSERVATORY_ANALYZE_URL: ${{ inputs.observatory_analyze_url }}
-    SLACK_API_TOKEN: ${{ inputs.slack_api_token }}
-    SLACK_CHANNEL_ID: ${{ inputs.slack_channel_id }}
+    HEART_MYSQL_DATABASE_URL: ${{ inputs.mysql_database_url }}
+    HEART_OBSERVATORY_API_URL: ${{ inputs.observatory_api_url }}
+    HEART_OBSERVATORY_ANALYZE_URL: ${{ inputs.observatory_analyze_url }}
+    HEART_SLACK_ACCESS_TOKEN: ${{ inputs.slack_access_token }}
+    HEART_SLACK_CHANNEL_ID: ${{ inputs.slack_channel_id }}

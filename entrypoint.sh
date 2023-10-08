@@ -1,36 +1,16 @@
 #!/bin/bash
 
-# generate_heart_command repositoryName analysisService file inline threshold
+# generate_heart_command analysisService config threshold except-listeners only-listeners verbose
 # Generate the heart command from the given arguments.
 generate_heart_command() {
-  local cliOptions=""
+  local cliOptions=" --config $2"
 
-  if [ -n "$3" ]; then cliOptions+=" --file $1/$3"; fi
-  if [ -n "$4" ]; then cliOptions+=" --inline $4"; fi
-  if [ -n "$5" ]; then cliOptions+=" --threshold $5"; fi
+  if [ -n "$3" ]; then cliOptions+=" --threshold $3"; fi
+  if [ -n "$4" ]; then cliOptions+=" --except-listeners $4"; fi
+  if [ -n "$5" ]; then cliOptions+=" --only-listeners $5"; fi
+  if [ -n "$6" ]; then cliOptions+=" --verbose"; fi
 
-  echo $2$cliOptions
-}
-
-# generate_installable_packages analysisService listenerServices
-# Generate the list of packages names to install with the version indicator, separated by a space.
-generate_installable_packages() {
-  local packageNamePrefix="@fabernovel/heart-"
-  local packageMajorVersionIndicator="@^3.0.0"
-  local servicesToInstall="cli $1 "
-
-  # add listener services
-  if [ -n "$2" ]; then
-    servicesToInstall+="${2//,/ }"
-  fi
-
-  servicesToInstall=$(echo $servicesToInstall | xargs)
-
-  # build the package names from the services names (add the @fabernovel/heart- prefix)
-  packagesToInstall=$packageNamePrefix${servicesToInstall// / $packageNamePrefix}
-
-  # set packages version
-  echo ${packagesToInstall// /$packageMajorVersionIndicator }$packageMajorVersionIndicator
+  echo $1$cliOptions
 }
 
 # trim(string)
@@ -40,32 +20,25 @@ trim() {
   echo "$(echo -e "${1}" | sed -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//')"
 }
 
-# name of the directory in which the repository will be cloned.
-# this will be used in git clone command below
-repositoryName="repository"
 # service name that analyze the URL (e.g. greenit)
 analysisService=$(trim $1)
-# file path to the JSON configuration used by the analysis service.
-file=$(trim $2)
-# inline string of the JSON configuration used by the analysis service.
-inline=$(trim $3)
+# file path or inline string to the JSON configuration used by the analysis service.
+config=$(trim $2)
 # check if the score of the result reaches the given threshold (between 0 and 100).
-threshold=$(trim $4)
+threshold=$(trim $3)
 # services names that process the result of the analyze, separated by commas (e.g. slack,bigquery)
-listenerServices=$(trim $5)
+exceptServices=$(trim $4)
+onlyServices=$(trim $5)
+verbose=$(trim $6)
 
-# if the file input has been been set, we need to have the file available for heart to read it.
+# clone the repository, because we need the configuration file if the provided config is a file.
 # checks that the repository does not already exist too.
-if [ -n "$file" ] && [[ ! -f $repositoryName ]]; then
-  git clone "$GITHUB_SERVER_URL/$GITHUB_REPOSITORY.git" --branch $GITHUB_REF_NAME $repositoryName
+git clone "$GITHUB_SERVER_URL/$GITHUB_REPOSITORY.git" --branch $GITHUB_REF_NAME cloned_repository
+
+if [[ -f "cloned_repository/$config" ]]; then
+  config="cloned_repository/$config"
 fi
 
-# install dependencies
-# create the package.json if it does not already exist, and hide the console output
-if [[ ! -f "package.json" ]]; then npm init -y > /dev/null; fi
-packages=$(generate_installable_packages "$analysisService" "$listenerServices")
-npm install $packages
-
 # run the heart command
-command=$(generate_heart_command "$repositoryName" "$analysisService" "$file" "$inline" "$threshold")
+command=$(generate_heart_command "$analysisService" "$config" "$threshold" "$exceptServices" "$onlyServices" "$verbose")
 npx heart $command
