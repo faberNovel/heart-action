@@ -33,12 +33,16 @@ verbose=$(trim $6)
 
 # clone the repository, because we need the configuration file if the provided config is a file.
 # checks that the repository does not already exist too.
-git clone "$GITHUB_SERVER_URL/$GITHUB_REPOSITORY.git" --branch $GITHUB_REF_NAME cloned_repository
+git clone "$GITHUB_SERVER_URL/$GITHUB_REPOSITORY.git" --branch $GITHUB_REF_NAME cloned_repository -v
 
 if [[ -f "cloned_repository/$config" ]]; then
   config="cloned_repository/$config"
 fi
 
 # run the heart command
+which npx
+pwd
+ls /usr/heart/node_modules/.bin
+npx -v
 command=$(generate_heart_command "$analysisService" "$config" "$threshold" "$exceptServices" "$onlyServices" "$verbose")
 npx heart $command

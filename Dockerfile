@@ -1,9 +1,9 @@
 FROM fabernovel/heart:v4.0.1
 
-# set bash as the default shell
+# Set bash as the default shell
 SHELL ["/bin/bash", "-c"]
 
-# As the config can be a file on the user's repository, we need git to retrieve it
+# As the --config option can be set to link to a file on the user's repository, we need git to retrieve it
 RUN apt-get update && \
     apt-get -yq --no-install-recommends install \
     ca-certificates \
@@ -11,6 +11,12 @@ RUN apt-get update && \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
-COPY entrypoint.sh /entrypoint.sh
+# Creates a mount point where Heart has been installed to
+VOLUME ["/usr/heart"]
 
-ENTRYPOINT ["/entrypoint.sh"]
+# Use the working directory where Heart has been installed to
+WORKDIR /usr/heart
+
+COPY entrypoint.sh ./
+
+ENTRYPOINT ["entrypoint.sh"]
