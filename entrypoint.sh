@@ -1,21 +1,21 @@
 #!/bin/bash
 
-# generate_heart_command analysisService config threshold except-listeners only-listeners verbose
-# Generate the heart command from the given arguments.
+# Generate the heart command arguments from the given parameters.
+# Usage: generate_heart_command analysisService config threshold exceptServices onlyServices verbose
 generate_heart_command() {
-  local cliOptions=" --config $2"
+  local cliOptions="$1 --config $2"
 
   if [ -n "$3" ]; then cliOptions+=" --threshold $3"; fi
   if [ -n "$4" ]; then cliOptions+=" --except-listeners $4"; fi
   if [ -n "$5" ]; then cliOptions+=" --only-listeners $5"; fi
   if [ -n "$6" ]; then cliOptions+=" --verbose"; fi
 
-  echo $1$cliOptions
+  echo $cliOptions
 }
 
-# trim(string)
 # Trim a string.
 # see https://stackoverflow.com/a/3232433
+# Usage: trim string
 trim() {
   echo "$(echo -e "${1}" | sed -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//')"
 }
@@ -31,14 +31,20 @@ exceptServices=$(trim $4)
 onlyServices=$(trim $5)
 verbose=$(trim $6)
 
-# clone the repository, because we need the configuration file if the provided config is a file.
-# checks that the repository does not already exist too.
-git clone "$GITHUB_SERVER_URL/$GITHUB_REPOSITORY.git" --branch $GITHUB_REF_NAME cloned_repository
-
-if [[ -f "cloned_repository/$config" ]]; then
-  config="cloned_repository/$config"
+echo "$GITHUB_WORKSPACE/$config"
+if [[ -f "$GITHUB_WORKSPACE/$config" ]]; then
+  config="$GITHUB_WORKSPACE/$config"
 fi
+
+# navigate to the working directory where Heart has been installed to
+# note: do not use the Dockerfile WORKDIR instruction, as explained in the documentation:
+# https://docs.github.com/en/actions/creating-actions/dockerfile-support-for-github-actions#workdir
+cd /usr/heart
+
+ls -la node_modules/@fabernovel/heart-observatory
+env
 
 # run the heart command
 command=$(generate_heart_command "$analysisService" "$config" "$threshold" "$exceptServices" "$onlyServices" "$verbose")
+echo "npx heart $command"
 npx heart $command
