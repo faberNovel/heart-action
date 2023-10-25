@@ -3,14 +3,14 @@
 # generate_heart_command analysisService config threshold except-listeners only-listeners verbose
 # Generate the heart command from the given arguments.
 generate_heart_command() {
-  local cliOptions=" --config $2"
+  local cliOptions="$1 --config $2"
 
   if [ -n "$3" ]; then cliOptions+=" --threshold $3"; fi
   if [ -n "$4" ]; then cliOptions+=" --except-listeners $4"; fi
   if [ -n "$5" ]; then cliOptions+=" --only-listeners $5"; fi
   if [ -n "$6" ]; then cliOptions+=" --verbose"; fi
 
-  echo $1$cliOptions
+  echo $cliOptions
 }
 
 # trim(string)
@@ -19,6 +19,13 @@ generate_heart_command() {
 trim() {
   echo "$(echo -e "${1}" | sed -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//')"
 }
+
+echo "$1"
+echo "$2"
+echo "$3"
+echo "$4"
+echo "$5"
+echo "$6"
 
 # service name that analyze the URL (e.g. greenit)
 analysisService=$(trim $1)
@@ -31,6 +38,14 @@ exceptServices=$(trim $4)
 onlyServices=$(trim $5)
 verbose=$(trim $6)
 
+echo "analysisService: $analysisService"
+echo "config: $config"
+echo "threshold: $threshold"
+echo "exceptServices: $exceptServices"
+echo "onlyServices: $onlyServices"
+echo "verbose: $verbose"
+
+echo "$GITHUB_WORKSPACE/$config"
 if [[ -f "$GITHUB_WORKSPACE/$config" ]]; then
   config="$GITHUB_WORKSPACE/$config"
 fi
