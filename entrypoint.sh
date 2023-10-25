@@ -37,11 +37,12 @@ if [[ -f "$GITHUB_WORKSPACE/$config" ]]; then
 fi
 
 # navigate to the working directory where Heart has been installed to
-# note: do not use the Dockerfile WORKDIR command, as explained in the documentation:
+# note: do not use the Dockerfile WORKDIR instruction, as explained in the documentation:
 # https://docs.github.com/en/actions/creating-actions/dockerfile-support-for-github-actions#workdir
 cd /usr/heart
 
 ls -la node_modules/@fabernovel/heart-observatory
+env
 
 # run the heart command
 command=$(generate_heart_command "$analysisService" "$config" "$threshold" "$exceptServices" "$onlyServices" "$verbose")
