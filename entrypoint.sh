@@ -31,18 +31,16 @@ exceptServices=$(trim $4)
 onlyServices=$(trim $5)
 verbose=$(trim $6)
 
-# clone the repository, because we need the configuration file if the provided config is a file.
-# checks that the repository does not already exist too.
-git clone "$GITHUB_SERVER_URL/$GITHUB_REPOSITORY.git" --branch $GITHUB_REF_NAME cloned_repository -v
-
-if [[ -f "cloned_repository/$config" ]]; then
-  config="cloned_repository/$config"
+if [[ -f "$GITHUB_WORKSPACE/$config" ]]; then
+  config="$GITHUB_WORKSPACE/$config"
 fi
 
+# navigate to the working directory where Heart has been installed to
+# note: do not use the Dockerfile WORKDIR command, as explained in the documentation:
+# https://docs.github.com/en/actions/creating-actions/dockerfile-support-for-github-actions#workdir
+cd /usr/heart
+
 # run the heart command
-which npx
-pwd
-ls /usr/heart/node_modules/.bin
-npx -v
 command=$(generate_heart_command "$analysisService" "$config" "$threshold" "$exceptServices" "$onlyServices" "$verbose")
+echo $command
 npx heart $command

@@ -16,6 +16,7 @@ This GitHub Action make use of the CLI tool [Heart](https://heart.fabernovel.com
 ## Usage
 
 ```yaml
+- uses: actions/checkout@v4
 - uses: faberNovel/heart-action@v4
   with:
     # [Required]
@@ -93,6 +94,7 @@ jobs:
     name: 🔬 Analyse heart.fabernovel.com with Mozilla Observatory
 
     steps:
+      - uses: actions/checkout@v4
       - uses: faberNovel/heart-action@v4
         with:
           analysis_service: observatory
@@ -128,6 +130,7 @@ jobs:
         ]
     
     steps:
+      - uses: actions/checkout@v4
       - uses: faberNovel/heart-action@v4
         with:
           analysis_service: lighthouse
@@ -153,6 +156,7 @@ jobs:
     name: 🔬 Analyze with GreenIT
 
     steps:
+      - uses: actions/checkout@v4
       - uses: faberNovel/heart-action@v4
         with:
           analysis_service: greenit
@@ -165,6 +169,7 @@ jobs:
     name: 🔬 Analyze with Google Lighthouse
 
     steps:
+      - uses: actions/checkout@v4
       - uses: faberNovel/heart-action@v4
         with:
           analysis_service: lighthouse
@@ -200,6 +205,7 @@ jobs:
         ]
 
     steps:
+      - uses: actions/checkout@v4
       - uses: faberNovel/heart-action@v4
         with:
           analysis_service: greenit
@@ -226,6 +232,7 @@ jobs:
         ]
     
     steps:
+      - uses: actions/checkout@v4
       - uses: faberNovel/heart-action@v4
         with:
           analysis_service: lighthouse
