@@ -8,4 +8,4 @@ VOLUME ["/usr/heart"]
 
 COPY entrypoint.sh /entrypoint.sh
 
-ENTRYPOINT ["sh", "-c", "/entrypoint.sh"]
+ENTRYPOINT ["/entrypoint.sh"]

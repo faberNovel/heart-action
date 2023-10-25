@@ -1,7 +1,7 @@
 #!/bin/bash
 
-# generate_heart_command analysisService config threshold except-listeners only-listeners verbose
-# Generate the heart command from the given arguments.
+# Generate the heart command arguments from the given parameters.
+# Usage: generate_heart_command analysisService config threshold exceptServices onlyServices verbose
 generate_heart_command() {
   local cliOptions="$1 --config $2"
 
@@ -13,19 +13,12 @@ generate_heart_command() {
   echo $cliOptions
 }
 
-# trim(string)
 # Trim a string.
 # see https://stackoverflow.com/a/3232433
+# Usage: trim string
 trim() {
   echo "$(echo -e "${1}" | sed -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//')"
 }
-
-echo "$1"
-echo "$2"
-echo "$3"
-echo "$4"
-echo "$5"
-echo "$6"
 
 # service name that analyze the URL (e.g. greenit)
 analysisService=$(trim $1)
@@ -38,13 +31,6 @@ exceptServices=$(trim $4)
 onlyServices=$(trim $5)
 verbose=$(trim $6)
 
-echo "analysisService: $analysisService"
-echo "config: $config"
-echo "threshold: $threshold"
-echo "exceptServices: $exceptServices"
-echo "onlyServices: $onlyServices"
-echo "verbose: $verbose"
-
 echo "$GITHUB_WORKSPACE/$config"
 if [[ -f "$GITHUB_WORKSPACE/$config" ]]; then
   config="$GITHUB_WORKSPACE/$config"
@@ -55,7 +41,9 @@ fi
 # https://docs.github.com/en/actions/creating-actions/dockerfile-support-for-github-actions#workdir
 cd /usr/heart
 
+ls -la node_modules/@fabernovel/heart-observatory
+
 # run the heart command
 command=$(generate_heart_command "$analysisService" "$config" "$threshold" "$exceptServices" "$onlyServices" "$verbose")
-echo $command
+echo "npx heart $command"
 npx heart $command
